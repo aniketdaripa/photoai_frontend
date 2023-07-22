@@ -51,14 +51,14 @@ const HomePage = (props) => {
           ///after getting quality of the last uploaded image ..logic after that
           let q = response.data.quality.score;
 
-          if (q <= 0.5) {
+          if (q <= 0.6) {
             console.log("low quality image.. please upload correct image");
             // imageList.pop();
             setNotSafeImages([
               ...notsafeImages,
               { url: newImgUrl, state: "false" },
             ]);
-          } else if (q > 0.5) {
+          } else if (q > 0.6) {
             setImageList([...imageList, d]);
             setSafeImages([...safeImages, { url: newImgUrl, state: "true" }]);
           }
