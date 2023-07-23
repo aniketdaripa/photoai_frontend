@@ -14,6 +14,8 @@ const HomePage = (props) => {
   const [imageQuality, setImageQuality] = useState(1000);
   const [demoUrl, setDemoUrl] = useState("");
 
+  const [noti,setNoti]= useState([]);
+
   const [showModal, setShowModal] = useState(false);
   const renderBackdrop = (props) => <div className="backdrop" {...props} />;
   // console.log(imageList);
@@ -50,17 +52,25 @@ const HomePage = (props) => {
           // on success: handle response
           ///after getting quality of the last uploaded image ..logic after that
           let q = response.data.quality.score;
-
-          if (q <= 0.7) {
+          console.log(q);
+          if (q <= 0.6) {
             console.log("low quality image.. please upload correct image");
             // imageList.pop();
             setNotSafeImages([
               ...notsafeImages,
               { url: newImgUrl, state: "false" },
             ]);
-          } else if (q > 0.7) {
+            setNoti(["rejected"]);
+            setTimeout(() => {
+              setNoti([]);
+            }, 5000);
+          } else if (q > 0.6) {
             setImageList([...imageList, d]);
             setSafeImages([...safeImages, { url: newImgUrl, state: "true" }]);
+            setNoti(["accepted"]);
+            setTimeout(() => {
+              setNoti([]);
+            }, 5000);
           }
         })
         .catch(function (error) {
@@ -71,10 +81,23 @@ const HomePage = (props) => {
     }
     // }
   };
-  console.log(imageList);
-  console.log(safeImages);
+
   return (
-    <Box display={"flex"} flexDirection={"column"} width="25vw">
+    <>
+    {/* Notifiaction PopUp */}
+    {
+      noti.length!=0 &&
+      (
+        <Box width="200px" height="auto" p={1} textAlign={"center"} border="1px solid grey" borderRadius={4} position="absolute" top={50} left={8} color="white" bgcolor={noti[0]=="accepted" ? "#46923c":"#EED202"} >
+      <Typography variant="h6">{noti[0]=="accepted" ?" Photo accepted":"The Photo quality is not Good."}</Typography>
+    </Box>
+      )
+    }
+    
+
+    {/* Notification PopUp */}
+
+     <Box display={"flex"} flexDirection={"column"} width="25vw">
       <Box p=" 0 0 5px 0">
         <Typography variant="h6">Photos</Typography>
       </Box>
@@ -143,6 +166,9 @@ const HomePage = (props) => {
         </>
       )}
     </Box>
+
+    </>
+   
   );
 };
 
