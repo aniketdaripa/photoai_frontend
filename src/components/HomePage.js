@@ -88,7 +88,7 @@ const HomePage = (props) => {
     {
       noti.length!=0 &&
       (
-        <Box width="200px" height="auto" p={1} textAlign={"center"} border="1px solid grey" borderRadius={4} position="absolute" top={50} left={8} color="white" bgcolor={noti[0]=="accepted" ? "#46923c":"#EED202"} >
+        <Box width="200px" height="auto" p={1} textAlign={"center"} border="1px solid grey" borderRadius={4} position="absolute" top={50} right={8} color="white" bgcolor={noti[0]=="accepted" ? "#46923c":"#EED202"} >
       <Typography variant="h6">{noti[0]=="accepted" ?" Photo accepted":"The Photo quality is not Good."}</Typography>
     </Box>
       )
